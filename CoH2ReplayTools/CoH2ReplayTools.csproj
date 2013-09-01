@@ -48,13 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\InvalidVersionException.cs" />
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mainForm.Designer.cs">
       <DependentUpon>mainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\ReplayParser.cs" />
     <Compile Include="Parser\Player.cs" />
     <Compile Include="Parser\Replay.cs" />
     <Compile Include="Parser\ReplayStream.cs" />
@@ -87,8 +88,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="0.jpg" />
+    <Content Include="1.jpg" />
+    <Content Include="img\0.jpg" />
+    <Content Include="img\1.jpg" />
     <Content Include="img\coh2.ico" />
     <Content Include="img\header.png" />
+    <None Include="Resources\0.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

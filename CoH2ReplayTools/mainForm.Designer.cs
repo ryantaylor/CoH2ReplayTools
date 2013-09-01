@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,19 +37,22 @@
             this.buttonReplay = new System.Windows.Forms.Button();
             this.buttonDirectory = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.sovietFaction = new System.Windows.Forms.DataGridViewImageColumn();
-            this.sovietName = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.sovietCPM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.ostheerFaction = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ostheerName = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.ostheerCPM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.gridTeam1 = new System.Windows.Forms.DataGridView();
+            this.gridTeam2 = new System.Windows.Forms.DataGridView();
+            this.replayInfo = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.oneFaction = new System.Windows.Forms.DataGridViewImageColumn();
+            this.oneName = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.oneCPM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.oneSteamID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.twoFaction = new System.Windows.Forms.DataGridViewImageColumn();
+            this.twoName = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.twoCPM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.twoSteamID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tooltipPlaybackDir = new System.Windows.Forms.ToolTip(this.components);
             this.mainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridTeam1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridTeam2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,8 +78,9 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // listReplays
             // 
@@ -85,11 +90,13 @@
             "Set playback directory"});
             this.listReplays.Location = new System.Drawing.Point(12, 85);
             this.listReplays.Name = "listReplays";
-            this.listReplays.Size = new System.Drawing.Size(136, 342);
+            this.listReplays.Size = new System.Drawing.Size(136, 355);
             this.listReplays.TabIndex = 1;
+            this.listReplays.SelectedIndexChanged += new System.EventHandler(this.listReplays_SelectedIndexChanged);
             // 
             // buttonReplay
             // 
+            this.buttonReplay.Enabled = false;
             this.buttonReplay.Location = new System.Drawing.Point(12, 27);
             this.buttonReplay.Name = "buttonReplay";
             this.buttonReplay.Size = new System.Drawing.Size(136, 23);
@@ -104,6 +111,7 @@
             this.buttonDirectory.Size = new System.Drawing.Size(113, 23);
             this.buttonDirectory.TabIndex = 3;
             this.buttonDirectory.Text = "Playback Directory...";
+            this.tooltipPlaybackDir.SetToolTip(this.buttonDirectory, "Click to select your CoH2 playback directory.");
             this.buttonDirectory.UseVisualStyleBackColor = true;
             this.buttonDirectory.Click += new System.EventHandler(this.buttonDirectory_Click);
             // 
@@ -114,93 +122,69 @@
             this.buttonRefresh.Size = new System.Drawing.Size(23, 23);
             this.buttonRefresh.TabIndex = 4;
             this.buttonRefresh.Text = "R";
+            this.tooltipPlaybackDir.SetToolTip(this.buttonRefresh, "Click to refresh playback directory.");
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
-            // dataGridView1
+            // gridTeam1
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.sovietFaction,
-            this.sovietName,
-            this.sovietCPM});
-            this.dataGridView1.Location = new System.Drawing.Point(165, 85);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(248, 100);
-            this.dataGridView1.TabIndex = 5;
+            this.gridTeam1.AllowUserToAddRows = false;
+            this.gridTeam1.AllowUserToDeleteRows = false;
+            this.gridTeam1.AllowUserToResizeColumns = false;
+            this.gridTeam1.AllowUserToResizeRows = false;
+            this.gridTeam1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridTeam1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.oneFaction,
+            this.oneName,
+            this.oneCPM,
+            this.oneSteamID});
+            this.gridTeam1.Location = new System.Drawing.Point(165, 85);
+            this.gridTeam1.Name = "gridTeam1";
+            this.gridTeam1.ReadOnly = true;
+            this.gridTeam1.RowHeadersVisible = false;
+            this.gridTeam1.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Empty;
+            this.gridTeam1.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
+            this.gridTeam1.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.gridTeam1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridTeam1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.gridTeam1.Size = new System.Drawing.Size(248, 110);
+            this.gridTeam1.TabIndex = 5;
+            this.gridTeam1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridTeam1_CellContentClick);
             // 
-            // sovietFaction
+            // gridTeam2
             // 
-            this.sovietFaction.HeaderText = "";
-            this.sovietFaction.Name = "sovietFaction";
-            this.sovietFaction.ReadOnly = true;
-            this.sovietFaction.Width = 32;
+            this.gridTeam2.AllowUserToAddRows = false;
+            this.gridTeam2.AllowUserToDeleteRows = false;
+            this.gridTeam2.AllowUserToResizeColumns = false;
+            this.gridTeam2.AllowUserToResizeRows = false;
+            this.gridTeam2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridTeam2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.twoFaction,
+            this.twoName,
+            this.twoCPM,
+            this.twoSteamID});
+            this.gridTeam2.Location = new System.Drawing.Point(165, 201);
+            this.gridTeam2.Name = "gridTeam2";
+            this.gridTeam2.ReadOnly = true;
+            this.gridTeam2.RowHeadersVisible = false;
+            this.gridTeam2.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
+            this.gridTeam2.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.gridTeam2.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridTeam2.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.gridTeam2.Size = new System.Drawing.Size(248, 110);
+            this.gridTeam2.TabIndex = 6;
+            this.gridTeam2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridTeam2_CellContentClick);
             // 
-            // sovietName
+            // replayInfo
             // 
-            this.sovietName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.sovietName.HeaderText = "Name";
-            this.sovietName.Name = "sovietName";
-            this.sovietName.ReadOnly = true;
-            // 
-            // sovietCPM
-            // 
-            this.sovietCPM.HeaderText = "CPM";
-            this.sovietCPM.Name = "sovietCPM";
-            this.sovietCPM.ReadOnly = true;
-            this.sovietCPM.Width = 50;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ostheerFaction,
-            this.ostheerName,
-            this.ostheerCPM});
-            this.dataGridView2.Location = new System.Drawing.Point(165, 191);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.Size = new System.Drawing.Size(248, 100);
-            this.dataGridView2.TabIndex = 6;
-            // 
-            // ostheerFaction
-            // 
-            this.ostheerFaction.HeaderText = "";
-            this.ostheerFaction.Name = "ostheerFaction";
-            this.ostheerFaction.ReadOnly = true;
-            this.ostheerFaction.Width = 32;
-            // 
-            // ostheerName
-            // 
-            this.ostheerName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ostheerName.HeaderText = "Name";
-            this.ostheerName.Name = "ostheerName";
-            this.ostheerName.ReadOnly = true;
-            // 
-            // ostheerCPM
-            // 
-            this.ostheerCPM.HeaderText = "CPM";
-            this.ostheerCPM.Name = "ostheerCPM";
-            this.ostheerCPM.ReadOnly = true;
-            this.ostheerCPM.Width = 50;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(165, 297);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(248, 130);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.Text = "No replay selected...";
+            this.replayInfo.BackColor = System.Drawing.SystemColors.Window;
+            this.replayInfo.Location = new System.Drawing.Point(165, 317);
+            this.replayInfo.Multiline = true;
+            this.replayInfo.Name = "replayInfo";
+            this.replayInfo.ReadOnly = true;
+            this.replayInfo.Size = new System.Drawing.Size(248, 123);
+            this.replayInfo.TabIndex = 7;
+            this.replayInfo.Text = "No replay selected...";
             // 
             // pictureBox1
             // 
@@ -213,27 +197,90 @@
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
+            // oneFaction
+            // 
+            this.oneFaction.HeaderText = "";
+            this.oneFaction.Name = "oneFaction";
+            this.oneFaction.ReadOnly = true;
+            this.oneFaction.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.oneFaction.Width = 32;
+            // 
+            // oneName
+            // 
+            this.oneName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.oneName.HeaderText = "Name";
+            this.oneName.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.oneName.Name = "oneName";
+            this.oneName.ReadOnly = true;
+            this.oneName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // oneCPM
+            // 
+            this.oneCPM.HeaderText = "CPM";
+            this.oneCPM.Name = "oneCPM";
+            this.oneCPM.ReadOnly = true;
+            this.oneCPM.Width = 50;
+            // 
+            // oneSteamID
+            // 
+            this.oneSteamID.HeaderText = "SteamID";
+            this.oneSteamID.Name = "oneSteamID";
+            this.oneSteamID.ReadOnly = true;
+            this.oneSteamID.Visible = false;
+            // 
+            // twoFaction
+            // 
+            this.twoFaction.HeaderText = "";
+            this.twoFaction.Name = "twoFaction";
+            this.twoFaction.ReadOnly = true;
+            this.twoFaction.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.twoFaction.Width = 32;
+            // 
+            // twoName
+            // 
+            this.twoName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.twoName.HeaderText = "Name";
+            this.twoName.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.twoName.Name = "twoName";
+            this.twoName.ReadOnly = true;
+            this.twoName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // twoCPM
+            // 
+            this.twoCPM.HeaderText = "CPM";
+            this.twoCPM.Name = "twoCPM";
+            this.twoCPM.ReadOnly = true;
+            this.twoCPM.Width = 50;
+            // 
+            // twoSteamID
+            // 
+            this.twoSteamID.HeaderText = "SteamID";
+            this.twoSteamID.Name = "twoSteamID";
+            this.twoSteamID.ReadOnly = true;
+            this.twoSteamID.Visible = false;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(423, 437);
+            this.ClientSize = new System.Drawing.Size(423, 451);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.replayInfo);
+            this.Controls.Add(this.gridTeam2);
+            this.Controls.Add(this.gridTeam1);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonDirectory);
             this.Controls.Add(this.buttonReplay);
             this.Controls.Add(this.listReplays);
             this.Controls.Add(this.mainMenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainForm";
             this.Text = "CoH2 Replay Tools 0.1b";
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridTeam1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridTeam2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -249,16 +296,19 @@
         private System.Windows.Forms.Button buttonReplay;
         private System.Windows.Forms.Button buttonDirectory;
         private System.Windows.Forms.Button buttonRefresh;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewImageColumn sovietFaction;
-        private System.Windows.Forms.DataGridViewLinkColumn sovietName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sovietCPM;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewImageColumn ostheerFaction;
-        private System.Windows.Forms.DataGridViewLinkColumn ostheerName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ostheerCPM;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridView gridTeam1;
+        private System.Windows.Forms.DataGridView gridTeam2;
+        private System.Windows.Forms.TextBox replayInfo;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.DataGridViewImageColumn oneFaction;
+        private System.Windows.Forms.DataGridViewLinkColumn oneName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn oneCPM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn oneSteamID;
+        private System.Windows.Forms.DataGridViewImageColumn twoFaction;
+        private System.Windows.Forms.DataGridViewLinkColumn twoName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn twoCPM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn twoSteamID;
+        private System.Windows.Forms.ToolTip tooltipPlaybackDir;
     }
 }
 

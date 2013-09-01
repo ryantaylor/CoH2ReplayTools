@@ -8,7 +8,7 @@ namespace CoH2ReplayTools.Parser
 {
     class Replay
     {
-        public ReplayStream Stream { get; }
+        public ReplayStream Stream { get; set; }
         public uint Version { get; set; }
         public string GameType { get; set; }
         public string WinCondition { get; set; }
@@ -20,7 +20,13 @@ namespace CoH2ReplayTools.Parser
         public uint MapWidth { get; set; }
         public uint MapHeight { get; set; }
         public string Season { get; set; }
-        public uint Duration { get; set; }
+        public int Duration { get; set; }
         public List<Player> Players { get; set; }
+
+        public Replay(string filename)
+        {
+            Stream = new ReplayStream(filename);
+            Players = new List<Player>();
+        }
     }
 }

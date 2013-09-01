@@ -22,5 +22,17 @@ namespace CoH2ReplayTools.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PlaybackDir {
+            get {
+                return ((string)(this["PlaybackDir"]));
+            }
+            set {
+                this["PlaybackDir"] = value;
+            }
+        }
     }
 }
